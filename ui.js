@@ -20,5 +20,5 @@ for(let body of bodies) {
   let option = document.createElement("option")
   alert(body.name)
   option.innerHTML = body.name
-  bodiesSelect.appendElement(option)
+  bodiesSelect.appendChild(option)
 }
