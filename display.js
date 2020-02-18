@@ -76,8 +76,10 @@ scene.add(ball3Sprite)
 let sim = new Simulation(bodies)
 
 setInterval(function() {
-  for(let body of bodies) {
-    body.sprite.position.set(body.x, body.y, body.z)
+  if(document.getElementById("pausebtn").innerHTML == "Pause") {
+    for(let body of bodies) {
+      body.sprite.position.set(body.x, body.y, body.z)
+    }
   }
   sim.step()
 }, 16.67)
