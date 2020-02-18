@@ -33,6 +33,46 @@ pausebtn.onclick = function() {
     pausebtn.innerHTML = "Pause"
   }
 }
+massSlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.mass = event.target.value
+  massval = event.target.value
+}
+radiusSlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.radius = event.target.value
+  radiusval = event.target.value
+}
+xSlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.x = event.target.value
+  xval = event.target.value
+}
+ySlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.y = event.target.value
+  yval = event.target.value
+}
+zSlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.z = event.target.value
+  zval = event.target.value
+}
+xvSlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.vx = event.target.value
+  xvelocityval = event.target.value
+}
+yvSlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.vy = event.target.value
+  yvelocityval = event.target.value
+}
+zvSlider.oninput = function(event) {
+  let body = getSelectedBody()
+  body.vz = event.target.value
+  zvelocityval = event.target.value
+}
 
 for(let body of bodies) {
   let option = document.createElement("option")
@@ -40,7 +80,7 @@ for(let body of bodies) {
   bodiesSelect.appendChild(option)
 }
 
-function updateBodyModification() {
+function getSelectedBody() {
   let bodyName = bodiesSelect.options[bodiesSelect.selectedIndex].text
   let body
   for(let i of bodies) {
@@ -49,6 +89,10 @@ function updateBodyModification() {
       break
     }
   }
+}
+
+function updateBodyModification() {
+  let body = getSelectedBody()
   massSlider.value = body.mass
   massval.innerHTML = `Mass (kg): ${body.mass}`
   radiusSlider.value = body.radius
