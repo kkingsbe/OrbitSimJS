@@ -60,3 +60,9 @@ html, body {
 .slidergroup p {
   margin: 0;
 }
+
+.bodies-select {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+}
