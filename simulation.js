@@ -101,5 +101,3 @@ class Body {
     return dist
   }
 }
-
-alert("simulation.js load complete")
