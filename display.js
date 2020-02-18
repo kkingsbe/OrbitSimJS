@@ -95,3 +95,5 @@ function getSelectedBody() {
     }
   }
 }
+
+alert("display.js load complete")
