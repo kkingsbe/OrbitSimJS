@@ -37,6 +37,7 @@ massSlider.oninput = function(event) {
   let body = getSelectedBody()
   body.mass = event.target.value
   massval = event.target.value
+  alert(body.mass)
 }
 radiusSlider.oninput = function(event) {
   let body = getSelectedBody()
