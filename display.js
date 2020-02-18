@@ -84,3 +84,14 @@ setInterval(function() {
     sim.step()
   }
 }, 16.67)
+
+function getSelectedBody() {
+  let bodyName = bodiesSelect.options[bodiesSelect.selectedIndex].text
+  let body
+  for(let i of bodies) {
+    if(i.name == bodyName) {
+      body = i
+      break
+    }
+  }
+}
