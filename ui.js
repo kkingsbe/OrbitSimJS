@@ -94,19 +94,19 @@ function getSelectedBody() {
 function updateBodyModification() {
   let body = getSelectedBody()
   massSlider.value = body.mass
-  massval.innerHTML = `Mass (kg): ${body.mass}`
+  massval.innerHTML = `Mass (kg): ${body.mass.toFixed(3)}`
   radiusSlider.value = body.radius
-  radiusval.innerHTML = `Radius (m): ${body.radius}`
+  radiusval.innerHTML = `Radius (m): ${body.radius.toFixed(3)}`
   xSlider.value = body.x
-  xval.innerHTML = `X (m): ${body.x}`
+  xval.innerHTML = `X (m): ${body.x.toFixed(3)}`
   ySlider.value = body.y
-  yval.innerHTML = `Y (m): ${body.y}`
+  yval.innerHTML = `Y (m): ${body.y.toFixed(3)}`
   zSlider.value = body.z
-  zval.innerHTML = `Z (m): ${body.z}`
+  zval.innerHTML = `Z (m): ${body.z.toFixed(3)}`
   xvSlider.value = body.vx
-  xvelocityval.innerHTML = `X Velocity (m/s): ${body.vx}`
+  xvelocityval.innerHTML = `X Velocity (m/s): ${body.vx.toFixed(3)}`
   yvSlider.value = body.vy
-  yvelocityval.innerHTML = `Y Velocity (m/s): ${body.vy}`
+  yvelocityval.innerHTML = `Y Velocity (m/s): ${body.vy.toFixed(3)}`
   zvSlider.value = body.vz
-  zvelocityval.innerHTML = `Z Velocity (m/s): ${body.vz}`
+  zvelocityval.innerHTML = `Z Velocity (m/s): ${body.vz.toFixed(3)}`
 }
