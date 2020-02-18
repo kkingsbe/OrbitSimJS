@@ -52,19 +52,19 @@ const getPointLight = (color, intensity, distance) => {
 
 init()
 
-let light = new THREE.AmbientLight(0x404040)
+let light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
 
 let ball1 = new Body("Ball1", 5e13, 10, 0, 0, 0, 0, 0, 0)
 let ball1Sprite = getSphere(10, 1, 1, 0xffff00)
 ball1.sprite = ball1Sprite
 
-let ball2 = new Body("Ball2", 5e11, 1, 20, 0, 0, 0, 5, -15)
-let ball2Sprite = getSphere(1, 1, 1, 0xffff00)
+let ball2 = new Body("Ball2", 5e11, 1, 20, 0, 0, 0, 0, 15)
+let ball2Sprite = getSphere(1, 1, 1, 0x00ff00)
 ball2.sprite = ball2Sprite
 
-let ball3 = new Body("Ball3", 5e11, 1, 30, 0, 0, 3, 0, 10)
-let ball3Sprite = getSphere(1, 1, 1, 0xffff00)
+let ball3 = new Body("Ball3", 5e11, 1, 30, 0, 0, 0, 10, 0)
+let ball3Sprite = getSphere(1, 1, 1, 0xff0000)
 ball3.sprite = ball3Sprite
 
 let bodies = [ball1, ball2, ball3]
