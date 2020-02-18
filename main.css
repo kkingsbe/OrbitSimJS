@@ -60,6 +60,9 @@ html, body {
 .slidergroup p {
   margin: 0;
 }
+.slidergroup {
+  margin-bottom: 10px;
+}
 
 .modify-body {
   position: fixed;
