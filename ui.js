@@ -99,5 +99,3 @@ function updateBodyModification() {
   zvSlider.value = body.vz
   zvelocityval.innerHTML = `Z Velocity (m/s): ${body.vz.toFixed(3)}`
 }
-
-alert("UI.js load complete")
