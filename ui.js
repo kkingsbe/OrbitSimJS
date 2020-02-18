@@ -80,17 +80,6 @@ for(let body of bodies) {
   bodiesSelect.appendChild(option)
 }
 
-function getSelectedBody() {
-  let bodyName = bodiesSelect.options[bodiesSelect.selectedIndex].text
-  let body
-  for(let i of bodies) {
-    if(i.name == bodyName) {
-      body = i
-      break
-    }
-  }
-}
-
 function updateBodyModification() {
   let body = getSelectedBody()
   massSlider.value = body.mass
