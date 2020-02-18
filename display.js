@@ -79,5 +79,5 @@ setInterval(function() {
   for(let body of bodies) {
     body.sprite.position.set(body.x, body.y, body.z)
   }
-  sim.step(0.01667 * 10)
+  sim.step()
 }, 16.67)

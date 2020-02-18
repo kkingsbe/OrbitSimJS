@@ -3,9 +3,11 @@ class Simulation {
     this.bodies = bodies
     this.t = 0
     this.G = 6.6742e-11
+    this.warp = 1
   }
 
-  step(dT) {
+  step() {
+    let dT = this.warp * 0.01667
     for(let body of this.bodies) {
       let f = this.calculateExternalForces(body)
       body.vx += (f.x / body.mass) * dT

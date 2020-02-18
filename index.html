@@ -4,10 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <div class="container">
     <div class="content">
+      <div class="sliders">
+        <div class="slidergroup">
+          <p id="timesliderval" >Time Warp: 1x</p>
+          <input type="range" min="0" max="10" value="0" class="slider" id="time-slider">
+        </div>
+      </div>
       <div class="viewport" id="viewport">
 
       </div>
@@ -17,5 +24,6 @@
   <script src="js/OrbitControls.js"></script>
   <script src="simulation.js"></script>
   <script src="display.js"></script>
+  <script src="ui.js"></script>
 </body>
 </html>
