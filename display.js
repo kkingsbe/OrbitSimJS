@@ -80,6 +80,6 @@ setInterval(function() {
     for(let body of bodies) {
       body.sprite.position.set(body.x, body.y, body.z)
     }
+    sim.step()
   }
-  sim.step()
 }, 16.67)
