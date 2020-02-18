@@ -20,7 +20,6 @@ let xvelocityval = document.getElementById("xvelocityval")
 let yvelocityval = document.getElementById("yvelocityval")
 let zvelocityval = document.getElementById("zvelocityval")
 
-try{
 timeslider.oninput = function(event) {
   let warpval = Math.pow(2, event.target.value)
   sim.warp = warpval
@@ -111,4 +110,3 @@ function updateBodyModification() {
   zvSlider.value = body.vz
   zvelocityval.innerHTML = `Z Velocity (m/s): ${body.vz.toFixed(3)}`
 }
-} catch(e) {alert(e)}
