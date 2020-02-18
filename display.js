@@ -69,9 +69,16 @@ ball3.sprite = ball3Sprite
 
 let bodies = [ball1, ball2, ball3]
 
-scene.add(ball1Sprite)
-scene.add(ball2Sprite)
-scene.add(ball3Sprite)
+for(let body of bodies) {
+  let geometry = new THREE.Geometry()
+  geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
+  let line = new MeshLine()
+  line.setGeometry(geometry)
+  let material = new MeshLineMaterial()
+  let trailMesh = new THREE.Mesh(line.geometry, material)
+  scene.add(body.sprite)
+  scene.add(trailMesh)
+}
 
 let sim = new Simulation(bodies)
 
@@ -79,6 +86,16 @@ setInterval(function() {
   if(document.getElementById("pausebtn").innerHTML == "Pause") {
     for(let body of bodies) {
       body.sprite.position.set(body.x, body.y, body.z)
+      let geometry = new THREE.Geometry()
+      for(let point of body.stateOverTime) {
+        let v = new THREE.Vector3(point.x, point.y, point.z)
+        geometry.vertices.push(v)
+      }
+      let line = new MeshLine()
+      line.setGeometry(geometry)
+      let material = new MeshLineMaterial()
+      let trailMesh = new THREE.Mesh(line.geometry, material)
+      scene.add(trailMesh) 
     }
     updateBodyModification()
     sim.step()
@@ -94,4 +111,5 @@ function getSelectedBody() {
       break
     }
   }
+  return body
 }
