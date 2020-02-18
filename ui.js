@@ -1,5 +1,6 @@
 let timeslider = document.getElementById("time-slider")
 let pausebtn = document.getElementById("pausebtn")
+let bodiesSelect = document.getElementById("bodies-select")
 
 timeslider.oninput = function(event) {
   let warpval = Math.pow(2, event.target.value)
@@ -13,4 +14,10 @@ pausebtn.onclick = function() {
   else {
     pausebtn.innerHTML = "Pause"
   }
+}
+
+for(let body of bodies) {
+  let option = document.createElement("option")
+  option.innerHTML = body.name
+  bodiesSelect.appendElement(option)
 }
