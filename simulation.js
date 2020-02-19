@@ -45,20 +45,15 @@ class Simulation {
         let Fgy = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.y - body.y)
         let Fgz = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.z - body.z)
 
-        if(Math.abs(body.distanceTo(tBody)) <= body.radius + tBody.radius) {
+        if(body.colliding()) {
           if(this.elasticCollisions) {
-            let vx = body.vx * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vx;
-            let vy = body.vy * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vy;
-            let vz = body.vz * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vz;
+            let vx = (body.vx * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vx) / (body.mass + tBody.mass);
+            let vy = (body.vy * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vy) / (body.mass + tBody.mass);
+            let vz = (body.vz * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vz) / (body.mass + tBody.mass);
 
-            let vx2 = tBody.vx * (tBody.mass - body.mass) + 2 * body.mass * body.vx;
-            let vy2 = tBody.vy * (tBody.mass - body.mass) + 2 * body.mass * body.vy;
-            let vz2 = tBody.vz * (tBody.mass - body.mass) + 2 * body.mass * body.vz;
-
-            console.log(body)
-            console.log(tBody)
-            console.log(vx)
-            console.log(vx2)
+            let vx2 = (tBody.vx * (tBody.mass - body.mass) + 2 * body.mass * body.vx) / (tBody.mass + body.mass);
+            let vy2 = (tBody.vy * (tBody.mass - body.mass) + 2 * body.mass * body.vy) / (tBody.mass + body.mass);
+            let vz2 = (tBody.vz * (tBody.mass - body.mass) + 2 * body.mass * body.vz) / (tBody.mass + body.mass);
 
             body.vx = vx
             body.vy = vy
@@ -66,6 +61,8 @@ class Simulation {
             tBody.vx = vx2
             tBody.vy = vy2
             tBody.vz = vz2
+
+            //this.warp = 0.05
           }
         }
 
@@ -113,5 +110,13 @@ class Body {
     console.log(material.color)
     this.sprite = new THREE.Mesh(geometry, material)
     return this.sprite
+  }
+
+  colliding() {
+    for(let tBody of sim.bodies) {
+      if(tBody != this) {
+        return Math.abs(this.distanceTo(tBody)) <= this.radius + tBody.radius
+      }
+    }
   }
 }

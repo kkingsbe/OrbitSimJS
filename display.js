@@ -51,10 +51,19 @@ init()
 let light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
 
-let ball1 = new Body("Ball1", 1, 1, 0, 0, 0, 15, 0, 0)
+/*
+let ball1 = new Body("Earth", 5.972e24, 1, 0, 0, 0, 0, 0, 0)
 let ball1Sprite = ball1.newSprite()
 
-let ball2 = new Body("Ball2", 1, 1, 30, 0, 0, 0, 0, 0)
+let ball2 = new Body("Moon", 7.348e22, 1, 3.48e8, 0, 0, 0, 0, 0)
+let ball2Sprite = ball2.newSprite()
+*/
+
+//Cool oscillation \/
+let ball1 = new Body("Ball1", 1e13, 1, 0, 0, 0, 0, 0, 0)
+let ball1Sprite = ball1.newSprite()
+
+let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 5)
 let ball2Sprite = ball2.newSprite()
 
 /*
