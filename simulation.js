@@ -47,13 +47,13 @@ class Simulation {
 
         if(Math.abs(body.distanceTo(tBody)) <= body.radius + tBody.radius) {
           if(this.elasticCollisions) {
-            let vx = ((body.mass - tBody.mass) * body.vx) / (body.mass + tBody.mass)
-            let vy = ((body.mass - tBody.mass) * body.vy) / (body.mass + tBody.mass)
-            let vz = ((body.mass - tBody.mass) * body.vz) / (body.mass + tBody.mass)
+            let vx = body.vx * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vx;
+            let vy = body.vy * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vy;
+            let vz = body.vz * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vz;
 
-            let vx2 = (2 * body.mass * body.vx) / (body.mass + tBody.mass)
-            let vy2 = (2 * body.mass * body.vy) / (body.mass + tBody.mass)
-            let vz2 = (2 * body.mass * body.vz) / (body.mass + tBody.mass)
+            let vx2 = tBody.vx * (tBody.mass - body.mass) + 2 * body.mass * body.vx;
+            let vy2 = tBody.vy * (tBody.mass - body.mass) + 2 * body.mass * body.vy;
+            let vz2 = tBody.vz * (tBody.mass - body.mass) + 2 * body.mass * body.vz;
 
             console.log(body)
             console.log(tBody)

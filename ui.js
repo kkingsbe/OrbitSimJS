@@ -25,7 +25,9 @@ timeslider.oninput = function(event) {
   sim.warp = warpval
   document.getElementById("timesliderval").innerHTML = `Time Warp: ${warpval}x`
 }
-pausebtn.onclick = function() {
+pausebtn.onclick = togglePause
+
+function togglePause() {
   if(pausebtn.innerHTML == "Pause") {
     pausebtn.innerHTML = "Play"
   }
@@ -33,6 +35,7 @@ pausebtn.onclick = function() {
     pausebtn.innerHTML = "Pause"
   }
 }
+
 massSlider.oninput = function(event) {
   let body = getSelectedBody()
   let mass = Math.exp(event.target.value)

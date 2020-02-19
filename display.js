@@ -51,14 +51,13 @@ init()
 let light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
 
-/*
 let ball1 = new Body("Ball1", 1, 1, 0, 0, 0, 15, 0, 0)
 let ball1Sprite = ball1.newSprite()
 
 let ball2 = new Body("Ball2", 1, 1, 30, 0, 0, 0, 0, 0)
 let ball2Sprite = ball2.newSprite()
-*/
 
+/*
 let ball1 = new Body("Star", 1e14, 5, 0, 0, 0, 0, 0, 0)
 let ball1Sprite = ball1.newSprite()
 
@@ -67,8 +66,9 @@ let ball2Sprite = ball2.newSprite()
 
 let ball3 = new Body("Ball3", 1e13, 1, 0, 30, 0, 0, 2, 10)
 let ball3Sprite = ball3.newSprite()
+*/
 
-let bodies = [ball1, ball2, ball3]
+let bodies = [ball1, ball2]
 
 for(let body of bodies) {
   let geometry = new THREE.Geometry()
