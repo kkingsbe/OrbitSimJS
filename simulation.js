@@ -1,9 +1,10 @@
 class Simulation {
-  constructor(bodies) {
+  constructor(bodies, elasticCollisions) {
     this.bodies = bodies
     this.t = 0
     this.G = 6.6742e-11
     this.warp = 1
+    this.elasticCollisions = elasticCollisions
   }
 
   step() {
@@ -44,23 +45,28 @@ class Simulation {
         let Fgy = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.y - body.y)
         let Fgz = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.z - body.z)
 
-        if(Math.abs(body.distanceTo(tBody)) <= body.radius || Math.abs(body.distanceTo(tBody)) <= tBody.radius) {
-          Fg = 0
-          Fgx = 0
-          Fgy = 0
-          Fgz = 0
-          body.vx = 0
-          body.vy = 0
-          body.vz = 0
-          body.ax = 0
-          body.ay = 0
-          body.az = 0
-          tBody.vx = 0
-          tBody.vy = 0
-          tBody.vz = 0
-          tBody.ax = 0
-          tBody.ay = 0
-          tBody.az = 0
+        if(Math.abs(body.distanceTo(tBody)) <= body.radius + tBody.radius) {
+          if(this.elasticCollisions) {
+            let vx = ((body.mass - tBody.mass) * body.vx) / (body.mass + tBody.mass)
+            let vy = ((body.mass - tBody.mass) * body.vy) / (body.mass + tBody.mass)
+            let vz = ((body.mass - tBody.mass) * body.vz) / (body.mass + tBody.mass)
+
+            let vx2 = (2 * body.mass * body.vx) / (body.mass + tBody.mass)
+            let vy2 = (2 * body.mass * body.vy) / (body.mass + tBody.mass)
+            let vz2 = (2 * body.mass * body.vz) / (body.mass + tBody.mass)
+
+            console.log(body)
+            console.log(tBody)
+            console.log(vx)
+            console.log(vx2)
+
+            body.vx = vx
+            body.vy = vy
+            body.vz = vz
+            tBody.vx = vx2
+            tBody.vy = vy2
+            tBody.vz = vz2
+          }
         }
 
         fx += Fgx
@@ -99,5 +105,13 @@ class Body {
   distanceTo(body) {
     let dist = Math.sqrt(Math.pow((this.x - body.x), 2) + Math.pow((this.y - body.y), 2) + Math.pow((this.z - body.z), 2))
     return dist
+  }
+
+  newSprite() {
+    let geometry = new THREE.SphereGeometry(this.radius, 32, 32)
+    let material = new THREE.MeshPhongMaterial({color: parseInt(randomColor().replace("#", "0x"), 16)})
+    console.log(material.color)
+    this.sprite = new THREE.Mesh(geometry, material)
+    return this.sprite
   }
 }

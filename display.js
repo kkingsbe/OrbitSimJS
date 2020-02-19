@@ -2,7 +2,7 @@ var scene, camera, renderer, controls
 const width = window.innerWidth
 const height = window.innerHeight
 const ratio = width / height
-const trailLen = 100 //How long the trail is
+const trailLen = 1000 //How long the trail is
 const trailDensity = 5 //How often new segments are added to the trail
 
 const init = () => {
@@ -15,7 +15,7 @@ const init = () => {
   scene.add(axis)
 
   renderer = new THREE.WebGLRenderer({ antialias: true })
-  renderer.setClearColor("#e5e5e5")
+  renderer.setClearColor("#000000")
   renderer.setSize(width, height)
 
   document.getElementById("viewport").append(renderer.domElement)
@@ -41,12 +41,6 @@ const init = () => {
   render()
 }
 
-const getSphere = (radius, width, height, color) => {
-  let geometry = new THREE.SphereGeometry(radius, 32, 32)
-  let material = new THREE.MeshStandardMaterial({color})
-  return new THREE.Mesh(geometry, material)
-}
-
 const getPointLight = (color, intensity, distance) => {
   let light = new THREE.PointLight(color, intensity, distance)
   return light
@@ -57,19 +51,13 @@ init()
 let light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
 
-let ball1 = new Body("Ball1", 5e13, 10, 0, 0, 0, 0, 0, 0)
-let ball1Sprite = getSphere(10, 1, 1, 0xffff00)
-ball1.sprite = ball1Sprite
+let ball1 = new Body("Ball1", 1, 1, 0, 0, 0, 15, 0, 0)
+let ball1Sprite = ball1.newSprite()
 
-let ball2 = new Body("Ball2", 5e11, 1, 20, 0, 0, 0, 0, 15)
-let ball2Sprite = getSphere(1, 1, 1, 0x00ff00)
-ball2.sprite = ball2Sprite
+let ball2 = new Body("Ball2", 1, 1, 30, 0, 0, 0, 0, 0)
+let ball2Sprite = ball2.newSprite()
 
-let ball3 = new Body("Ball3", 5e11, 1, 30, 0, 0, 0, 0, 10)
-let ball3Sprite = getSphere(1, 1, 1, 0xff0000)
-ball3.sprite = ball3Sprite
-
-let bodies = [ball1, ball2, ball3]
+let bodies = [ball1, ball2]
 
 for(let body of bodies) {
   let geometry = new THREE.Geometry()
@@ -83,7 +71,7 @@ for(let body of bodies) {
   scene.add(trailMesh)
 }
 
-let sim = new Simulation(bodies)
+let sim = new Simulation(bodies, true)
 
 setInterval(function() {
   if(document.getElementById("pausebtn").innerHTML == "Pause") {
