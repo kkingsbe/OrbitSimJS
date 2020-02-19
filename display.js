@@ -2,6 +2,8 @@ var scene, camera, renderer, controls
 const width = window.innerWidth
 const height = window.innerHeight
 const ratio = width / height
+const trailLen = 100 //How long the trail is
+const trailDensity = 5 //How often new segments are added to the trail
 
 const init = () => {
   scene = new THREE.Scene()
@@ -76,6 +78,7 @@ for(let body of bodies) {
   line.setGeometry(geometry)
   let material = new MeshLineMaterial()
   let trailMesh = new THREE.Mesh(line.geometry, material)
+  body.trail = trailMesh
   scene.add(body.sprite)
   scene.add(trailMesh)
 }
@@ -86,21 +89,34 @@ setInterval(function() {
   if(document.getElementById("pausebtn").innerHTML == "Pause") {
     for(let body of bodies) {
       body.sprite.position.set(body.x, body.y, body.z)
-      let geometry = new THREE.Geometry()
-      for(let point of body.stateOverTime) {
-        let v = new THREE.Vector3(point.x, point.y, point.z)
-        geometry.vertices.push(v)
-      }
-      let line = new MeshLine()
-      line.setGeometry(geometry)
-      let material = new MeshLineMaterial()
-      let trailMesh = new THREE.Mesh(line.geometry, material)
-      scene.add(trailMesh) 
+      drawTrail(body)
     }
     updateBodyModification()
     sim.step()
   }
 }, 16.67)
+
+function drawTrail(body) {
+  let geometry = new THREE.Geometry()
+  let i = (body.stateOverTime.length - trailLen > 0) ? body.stateOverTime.length - trailLen : 0
+  while(i < body.stateOverTime.length) {
+    let point = body.stateOverTime[i]
+    let v = new THREE.Vector3(point.x, point.y, point.z)
+    geometry.vertices.push(v)
+    i += trailDensity
+  }
+  let line = new MeshLine()
+  line.setGeometry(geometry)
+  let material = new MeshLineMaterial()
+  let trailMesh = new THREE.Mesh(line.geometry, material)
+
+  body.trail.geometry.dispose()
+  body.trail.material.dispose()
+  scene.remove(body.trail)
+
+  body.trail = trailMesh
+  scene.add(trailMesh) 
+}
 
 function getSelectedBody() {
   let bodyName = bodiesSelect.options[bodiesSelect.selectedIndex].text

@@ -29,7 +29,6 @@ class Simulation {
         ay: (f.y / body.mass),
         az: (f.z / body.mass)
       }
-      console.log(body)
       body.stateOverTime.push(state)
       this.t += dT
     }
