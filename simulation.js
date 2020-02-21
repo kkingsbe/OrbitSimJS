@@ -45,7 +45,8 @@ class Simulation {
         let Fgy = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.y - body.y)
         let Fgz = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.z - body.z)
 
-        if(body.colliding()) {
+        if(body.colliding(tBody)) {
+          console.log(body.name + " collided with " + tBody.name)
           if(this.elasticCollisions) {
             let vx = (body.vx * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vx) / (body.mass + tBody.mass);
             let vy = (body.vy * (body.mass - tBody.mass) + 2 * tBody.mass * tBody.vy) / (body.mass + tBody.mass);
@@ -112,11 +113,9 @@ class Body {
     return this.sprite
   }
 
-  colliding() {
-    for(let tBody of sim.bodies) {
-      if(tBody != this) {
-        return Math.abs(this.distanceTo(tBody)) <= this.radius + tBody.radius
-      }
+  colliding(tBody) {
+    if(tBody != this) {
+      return Math.abs(this.distanceTo(tBody)) <= this.radius + tBody.radius
     }
   }
 }

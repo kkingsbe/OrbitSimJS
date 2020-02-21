@@ -4,6 +4,7 @@ const height = window.innerHeight
 const ratio = width / height
 const trailLen = 1000 //How long the trail is
 const trailDensity = 5 //How often new segments are added to the trail
+var trails = false
 
 const init = () => {
   scene = new THREE.Scene()
@@ -69,8 +70,8 @@ let ball2Sprite = ball2.newSprite()
 */
 
 let bodies = []
-for(let i = 0; i < 100; i++) {
-  let body = new Body(i, 1e10, 1, (Math.random() * 200) - 100, (Math.random() * 200) - 100, (Math.random() * 200) - 100, 0, 0, 0)
+for(let i = 0; i < 500; i++) {
+  let body = new Body(i, 1 * Math.pow(10, (Math.random() * 1) + 10), 1, (Math.random() * 200) - 100, (Math.random() * 200) - 100, (Math.random() * 200) - 100, 0, 0, 0)
   let sprite = body.newSprite()
   bodies.push(body)
 }
@@ -87,15 +88,15 @@ let ball3Sprite = ball3.newSprite()
 */
 
 for(let body of bodies) {
-  //let geometry = new THREE.Geometry()
-  //geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
-  //let line = new MeshLine()
-  //line.setGeometry(geometry)
-  //let material = new MeshLineMaterial()
-  //let trailMesh = new THREE.Mesh(line.geometry, material)
-  //body.trail = trailMesh
+  let geometry = new THREE.Geometry()
+  geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
+  let line = new MeshLine()
+  line.setGeometry(geometry)
+  let material = new MeshLineMaterial()
+  let trailMesh = new THREE.Mesh(line.geometry, material)
+  body.trail = trailMesh
   scene.add(body.sprite)
-  //scene.add(trailMesh)
+  scene.add(trailMesh)
 }
 
 let sim = new Simulation(bodies, true)
@@ -104,7 +105,7 @@ setInterval(function() {
   if(document.getElementById("pausebtn").innerHTML == "Pause") {
     for(let body of bodies) {
       body.sprite.position.set(body.x, body.y, body.z)
-      //drawTrail(body)
+      if(trails) rawTrail(body)
     }
     updateBodyModification()
     sim.step()
