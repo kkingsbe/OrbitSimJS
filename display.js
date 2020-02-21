@@ -87,11 +87,11 @@ let ball3Sprite = ball3.newSprite()
 */
 
 for(let body of bodies) {
-  let geometry = new THREE.Geometry()
-  geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
-  let line = new MeshLine()
-  line.setGeometry(geometry)
-  let material = new MeshLineMaterial()
+  //let geometry = new THREE.Geometry()
+  //geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
+  //let line = new MeshLine()
+  //line.setGeometry(geometry)
+  //let material = new MeshLineMaterial()
   //let trailMesh = new THREE.Mesh(line.geometry, material)
   //body.trail = trailMesh
   scene.add(body.sprite)
