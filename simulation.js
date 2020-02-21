@@ -8,7 +8,7 @@ class Simulation {
   }
 
   step() {
-    let dT = this.warp * 0.01667
+    let dT = this.warp * (simSubStep / 0.01667)
     for(let body of this.bodies) {
       let f = this.calculateExternalForces(body)
       body.vx += (f.x / body.mass) * dT
