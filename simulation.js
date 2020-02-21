@@ -5,11 +5,10 @@ class Simulation {
     this.G = 6.6742e-11
     this.warp = 1
     this.elasticCollisions = elasticCollisions
-    this.simSubStep = 10
   }
 
   step() {
-    let dT = this.warp * (simSubStep / 0.01667)
+    let dT = this.warp * 0.01667
     for(let body of this.bodies) {
       let f = this.calculateExternalForces(body)
       body.vx += (f.x / body.mass) * dT
