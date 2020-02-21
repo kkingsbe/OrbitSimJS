@@ -5,6 +5,7 @@ class Simulation {
     this.G = 6.6742e-11
     this.warp = 1
     this.elasticCollisions = elasticCollisions
+    this.simSubStep = 10
   }
 
   step() {
