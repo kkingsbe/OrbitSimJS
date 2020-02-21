@@ -37,7 +37,6 @@ class Simulation {
 
     for(let tBody of this.bodies) {
       if(tBody != body) {
-        console.log(body)
         let Fg = this.G * ((tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 2))
         let Fgx = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.x - body.x)
         let Fgy = ((this.G * tBody.mass * body.mass) / Math.pow(body.distanceTo(tBody), 3)) * (tBody.y - body.y)

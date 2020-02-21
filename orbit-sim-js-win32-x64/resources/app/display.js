@@ -6,7 +6,7 @@ const ratio = width / height
 const init = () => {
   scene = new THREE.Scene()
   camera = new THREE.PerspectiveCamera(45, ratio, 1, 1000)
-  camera.position.z = 10
+  camera.position.z = 30
 
   controls = new THREE.OrbitControls(camera, document.getElementById("viewport"))
   axis = new THREE.AxisHelper(300)
@@ -55,15 +55,15 @@ init()
 let light = new THREE.AmbientLight(0x404040)
 scene.add(light)
 
-let ball1 = new Body("Ball1", 5000000000000, 1, 0, 0, 0, 0, 0, 5)
-let ball1Sprite = getSphere(1, 1, 1, 0xffff00)
+let ball1 = new Body("Ball1", 5e13, 10, 0, 0, 0, 0, 0, 0)
+let ball1Sprite = getSphere(10, 1, 1, 0xffff00)
 ball1.sprite = ball1Sprite
 
-let ball2 = new Body("Ball2", 5000000000000, 1, 10, 0, 0, 0, 0, -5)
+let ball2 = new Body("Ball2", 5e11, 1, 20, 0, 0, 0, 5, -15)
 let ball2Sprite = getSphere(1, 1, 1, 0xffff00)
 ball2.sprite = ball2Sprite
 
-let ball3 = new Body("Ball3", 5000000000000, 1, 5, 10, 0, 0, 5, -5)
+let ball3 = new Body("Ball3", 5e11, 1, 30, 0, 0, 3, 0, 10)
 let ball3Sprite = getSphere(1, 1, 1, 0xffff00)
 ball3.sprite = ball3Sprite
 
@@ -73,11 +73,11 @@ scene.add(ball1Sprite)
 scene.add(ball2Sprite)
 scene.add(ball3Sprite)
 
-let sim = new Simulation([ball1, ball2, ball3])
+let sim = new Simulation(bodies)
 
 setInterval(function() {
   for(let body of bodies) {
     body.sprite.position.set(body.x, body.y, body.z)
   }
-  sim.step(0.01667)
+  sim.step(0.01667 * 10)
 }, 16.67)
