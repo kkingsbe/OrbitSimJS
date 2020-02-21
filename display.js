@@ -60,11 +60,20 @@ let ball2Sprite = ball2.newSprite()
 */
 
 //Cool oscillation \/
+/*
 let ball1 = new Body("Ball1", 1e13, 1, 0, 0, 0, 0, 0, 0)
 let ball1Sprite = ball1.newSprite()
 
 let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 5)
 let ball2Sprite = ball2.newSprite()
+*/
+
+let bodies = []
+for(let i = 0; i < 1000; i++) {
+  let body = new Body(i, 1e13, 1, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100)
+  let sprite = body.newSprite()
+  bodies.push(body)
+}
 
 /*
 let ball1 = new Body("Star", 1e14, 5, 0, 0, 0, 0, 0, 0)
@@ -76,8 +85,6 @@ let ball2Sprite = ball2.newSprite()
 let ball3 = new Body("Ball3", 1e13, 1, 0, 30, 0, 0, 2, 10)
 let ball3Sprite = ball3.newSprite()
 */
-
-let bodies = [ball1, ball2]
 
 for(let body of bodies) {
   let geometry = new THREE.Geometry()
