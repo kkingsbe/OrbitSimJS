@@ -92,10 +92,10 @@ for(let body of bodies) {
   let line = new MeshLine()
   line.setGeometry(geometry)
   let material = new MeshLineMaterial()
-  let trailMesh = new THREE.Mesh(line.geometry, material)
-  body.trail = trailMesh
+  //let trailMesh = new THREE.Mesh(line.geometry, material)
+  //body.trail = trailMesh
   scene.add(body.sprite)
-  scene.add(trailMesh)
+  //scene.add(trailMesh)
 }
 
 let sim = new Simulation(bodies, true)
