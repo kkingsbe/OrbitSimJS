@@ -69,7 +69,7 @@ let ball2Sprite = ball2.newSprite()
 */
 
 let bodies = []
-for(let i = 0; i < 10; i++) {
+for(let i = 0; i < 100; i++) {
   let body = new Body(i, 1e13, 1, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100)
   let sprite = body.newSprite()
   bodies.push(body)
