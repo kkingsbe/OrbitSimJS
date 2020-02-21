@@ -6,7 +6,7 @@ const trailLen = 1000 //How long the trail is
 const trailDensity = 5 //How often new segments are added to the trail
 var simSubStep = 10 //How many time steps per frame
 
-alert("SSS Enabled")
+alert("SSS 2.0 Enabled")
 
 const init = () => {
   scene = new THREE.Scene()
