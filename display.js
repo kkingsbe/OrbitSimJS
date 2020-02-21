@@ -104,7 +104,7 @@ setInterval(function() {
   if(document.getElementById("pausebtn").innerHTML == "Pause") {
     for(let body of bodies) {
       body.sprite.position.set(body.x, body.y, body.z)
-      drawTrail(body)
+      //drawTrail(body)
     }
     updateBodyModification()
     sim.step()
