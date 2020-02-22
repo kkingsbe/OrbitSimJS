@@ -3,11 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Orbit Simulator</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <div class="container">
     <div class="content">
+      <div class="sliders">
+        <div class="slidergroup">
+          <p id="timesliderval" >Time Warp: 1x</p>
+          <input type="range" min="0" max="10" value="0" class="slider" id="time-slider">
+        </div>
+        <div class="btn" id="pausebtn">Pause</div>
+      </div>
+      <div class="modify-body">
+        <select id="bodies-select"></select>
+        <div class="slidergroup">
+          <p id="massval">Mass (kg): </p>
+          <input type="range" min="0" max="100" value="0" class="slider" id="mass-slider">
+        </div>
+        <div class="slidergroup">
+          <p id="radiusval" >Radius (m): </p>
+          <input type="range" min="0" max="100" value="0" class="slider" id="radius-slider">
+        </div>
+        <div class="slidergroup">
+          <p id="xval" >X: </p>
+          <input type="range" min="-100" max="100" value="0" class="slider" id="x-slider">
+        </div>
+        <div class="slidergroup">
+          <p id="yval" >Y: </p>
+          <input type="range" min="-100" max="100" value="0" class="slider" id="y-slider">
+        </div>
+        <div class="slidergroup">
+          <p id="zval" >Z: </p>
+          <input type="range" min="-100" max="100" value="0" class="slider" id="z-slider">
+        </div>
+        <div class="slidergroup">
+          <p id="xvelocityval" >X Velocity: </p>
+          <input type="range" min="-100" max="100" value="0" class="slider" id="xv-slider">
+        </div>
+        <div class="slidergroup">
+          <p id="yvelocityval" >Y Velocity: </p>
+          <input type="range" min="-100" max="100" value="0" class="slider" id="yv-slider">
+        </div>
+        <div class="slidergroup">
+          <p id="zvelocityval" >Z Velocity: </p>
+          <input type="range" min="-100" max="100" value="0" class="slider" id="zv-slider">
+        </div>
+      </div>
       <div class="viewport" id="viewport">
 
       </div>
@@ -15,7 +58,10 @@
   </div>
   <script src="js/three.js"></script>
   <script src="js/OrbitControls.js"></script>
+  <script src="js/THREE.MeshLine.js"></script>
+  <script src="randomColor.js"></script>
   <script src="simulation.js"></script>
   <script src="display.js"></script>
+  <script src="ui.js"></script>
 </body>
 </html>

@@ -2,6 +2,9 @@ var scene, camera, renderer, controls
 const width = window.innerWidth
 const height = window.innerHeight
 const ratio = width / height
+const trailLen = 1000 //How long the trail is
+const trailDensity = 5 //How often new segments are added to the trail
+var trails = false
 
 const init = () => {
   scene = new THREE.Scene()
@@ -13,7 +16,7 @@ const init = () => {
   scene.add(axis)
 
   renderer = new THREE.WebGLRenderer({ antialias: true })
-  renderer.setClearColor("#e5e5e5")
+  renderer.setClearColor("#000000")
   renderer.setSize(width, height)
 
   document.getElementById("viewport").append(renderer.domElement)
@@ -39,12 +42,6 @@ const init = () => {
   render()
 }
 
-const getSphere = (radius, width, height, color) => {
-  let geometry = new THREE.SphereGeometry(radius, 32, 32)
-  let material = new THREE.MeshStandardMaterial({color})
-  return new THREE.Mesh(geometry, material)
-}
-
 const getPointLight = (color, intensity, distance) => {
   let light = new THREE.PointLight(color, intensity, distance)
   return light
@@ -52,32 +49,99 @@ const getPointLight = (color, intensity, distance) => {
 
 init()
 
-let light = new THREE.AmbientLight(0x404040)
+let light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
 
-let ball1 = new Body("Ball1", 5e13, 10, 0, 0, 0, 0, 0, 0)
-let ball1Sprite = getSphere(10, 1, 1, 0xffff00)
-ball1.sprite = ball1Sprite
+/*
+let ball1 = new Body("Earth", 5.972e24, 1, 0, 0, 0, 0, 0, 0)
+let ball1Sprite = ball1.newSprite()
 
-let ball2 = new Body("Ball2", 5e11, 1, 20, 0, 0, 0, 5, -15)
-let ball2Sprite = getSphere(1, 1, 1, 0xffff00)
-ball2.sprite = ball2Sprite
+let ball2 = new Body("Moon", 7.348e22, 1, 3.48e8, 0, 0, 0, 0, 0)
+let ball2Sprite = ball2.newSprite()
+*/
 
-let ball3 = new Body("Ball3", 5e11, 1, 30, 0, 0, 3, 0, 10)
-let ball3Sprite = getSphere(1, 1, 1, 0xffff00)
-ball3.sprite = ball3Sprite
+//Cool oscillation \/
+/*
+let ball1 = new Body("Ball1", 1e13, 1, 0, 0, 0, 0, 0, 0)
+let ball1Sprite = ball1.newSprite()
 
-let bodies = [ball1, ball2, ball3]
+let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 5)
+let ball2Sprite = ball2.newSprite()
+*/
 
-scene.add(ball1Sprite)
-scene.add(ball2Sprite)
-scene.add(ball3Sprite)
+let bodies = []
+for(let i = 0; i < 500; i++) {
+  let body = new Body(i, 1 * Math.pow(10, (Math.random() * 1) + 10), 1, (Math.random() * 200) - 100, (Math.random() * 200) - 100, (Math.random() * 200) - 100, 0, 0, 0)
+  let sprite = body.newSprite()
+  bodies.push(body)
+}
 
-let sim = new Simulation(bodies)
+/*
+let ball1 = new Body("Star", 1e14, 5, 0, 0, 0, 0, 0, 0)
+let ball1Sprite = ball1.newSprite()
+
+let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 10)
+let ball2Sprite = ball2.newSprite()
+
+let ball3 = new Body("Ball3", 1e13, 1, 0, 30, 0, 0, 2, 10)
+let ball3Sprite = ball3.newSprite()
+*/
+
+for(let body of bodies) {
+  let geometry = new THREE.Geometry()
+  geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
+  let line = new MeshLine()
+  line.setGeometry(geometry)
+  let material = new MeshLineMaterial()
+  let trailMesh = new THREE.Mesh(line.geometry, material)
+  body.trail = trailMesh
+  scene.add(body.sprite)
+  scene.add(trailMesh)
+}
+
+let sim = new Simulation(bodies, true)
 
 setInterval(function() {
-  for(let body of bodies) {
-    body.sprite.position.set(body.x, body.y, body.z)
+  if(document.getElementById("pausebtn").innerHTML == "Pause") {
+    for(let body of bodies) {
+      body.sprite.position.set(body.x, body.y, body.z)
+      if(trails) rawTrail(body)
+    }
+    updateBodyModification()
+    sim.step()
   }
-  sim.step(0.01667 * 10)
 }, 16.67)
+
+function drawTrail(body) {
+  let geometry = new THREE.Geometry()
+  let i = (body.stateOverTime.length - trailLen > 0) ? body.stateOverTime.length - trailLen : 0
+  while(i < body.stateOverTime.length) {
+    let point = body.stateOverTime[i]
+    let v = new THREE.Vector3(point.x, point.y, point.z)
+    geometry.vertices.push(v)
+    i += trailDensity
+  }
+  let line = new MeshLine()
+  line.setGeometry(geometry)
+  let material = new MeshLineMaterial()
+  let trailMesh = new THREE.Mesh(line.geometry, material)
+
+  body.trail.geometry.dispose()
+  body.trail.material.dispose()
+  scene.remove(body.trail)
+
+  body.trail = trailMesh
+  scene.add(trailMesh) 
+}
+
+function getSelectedBody() {
+  let bodyName = bodiesSelect.options[bodiesSelect.selectedIndex].text
+  let body
+  for(let i of bodies) {
+    if(i.name == bodyName) {
+      body = i
+      break
+    }
+  }
+  return body
+}
