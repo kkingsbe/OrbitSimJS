@@ -1,5 +1,6 @@
 let timeslider = document.getElementById("time-slider")
 let pausebtn = document.getElementById("pausebtn")
+let scenarioSelect = document.getElementById("ScenarioSelect")
 
 let bodiesSelect = document.getElementById("bodies-select")
 let massSlider = document.getElementById("mass-slider")
@@ -78,14 +79,21 @@ zvSlider.oninput = function(event) {
   zvelocityval.innerHTML = event.target.value
 }
 
-for(let body of bodies) {
-  let option = document.createElement("option")
-  option.innerHTML = body.name
-  bodiesSelect.appendChild(option)
+scenarioSelect.onchange = function(event) {
+  switchScenario(scenarioSelect.value)
+}
+
+function populateBodiesSelect() {
+  for(let body of bodies) {
+    let option = document.createElement("option")
+    option.innerHTML = body.name
+    bodiesSelect.appendChild(option)
+  }
 }
 
 function updateBodyModification() {
   let body = getSelectedBody()
+  if(typeof(body) == "undefined") return
   massSlider.value = Math.log(body.mass)
   massval.innerHTML = `Mass (kg): ${body.mass.toFixed(3)}`
   radiusSlider.value = body.radius

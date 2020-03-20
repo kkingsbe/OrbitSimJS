@@ -53,51 +53,69 @@ let light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
 
 let bodies = []
-/*
-for(let i = 0; i < 500; i++) {
-  let body = new Body(i, 1 * Math.pow(10, (Math.random() * 1) + 10), 1, (Math.random() * 200) - 100, (Math.random() * 200) - 100, (Math.random() * 200) - 100, 0, 0, 0)
-  let sprite = body.newSprite()
-  bodies.push(body)
+let sim
+
+function switchScenario(name) {
+  deleteOldBodies()
+  bodies = []
+  switch(name) {
+    case "empty":
+      break;
+    case "EarthAndMoon":
+      break;
+    case "Oscillation":
+      //Cool oscillation \/
+      let body1 = new Body("Body 1", 1e13, 1, 0, 0, 0, 0, 0, 0)
+      let body1Sprite = body1.newSprite()
+
+      let body2 = new Body("Body 2", 1e13, 1, 30, 0, 0, 0, 0, 5)
+      let body2Sprite = body2.newSprite()
+      bodies.push(body1)
+      bodies.push(body2)
+      break;
+    case "StarSystem":
+      let ball1 = new Body("Star", 1e14, 5, 0, 0, 0, 0, 0, 0)
+      let ball1Sprite = ball1.newSprite()
+
+      let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 10)
+      let ball2Sprite = ball2.newSprite()
+
+      let ball3 = new Body("Ball3", 1e13, 1, 0, 30, 0, 0, 2, 10)
+      let ball3Sprite = ball3.newSprite()
+
+      bodies.push(ball1)
+      bodies.push(ball2)
+      bodies.push(ball3)
+      break;
+    case "chaos":
+      for(let i = 0; i < 500; i++) {
+        let body = new Body(i, 1 * Math.pow(10, (Math.random() * 1) + 10), 1, (Math.random() * 200) - 100, (Math.random() * 200) - 100, (Math.random() * 200) - 100, 0, 0, 0)
+        let sprite = body.newSprite()
+        bodies.push(body)
+      }
+      break;
+  }
+  for(let body of bodies) {
+    let geometry = new THREE.Geometry()
+    geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
+    let line = new MeshLine()
+    line.setGeometry(geometry)
+    let material = new MeshLineMaterial()
+    let trailMesh = new THREE.Mesh(line.geometry, material)
+    body.trail = trailMesh
+    scene.add(body.sprite)
+    scene.add(trailMesh)
+  }
+  populateBodiesSelect()
+  sim = new Simulation(bodies, true)
 }
-*/
 
-/*
-let ball1 = new Body("Star", 1e14, 5, 0, 0, 0, 0, 0, 0)
-let ball1Sprite = ball1.newSprite()
-
-let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 10)
-let ball2Sprite = ball2.newSprite()
-
-let ball3 = new Body("Ball3", 1e13, 1, 0, 30, 0, 0, 2, 10)
-let ball3Sprite = ball3.newSprite()
-
-bodies.push(ball1)
-bodies.push(ball2)
-bodies.push(ball3)
-*/
-
-//Cool oscillation \/
-let ball1 = new Body("Ball1", 1e13, 1, 0, 0, 0, 0, 0, 0)
-let ball1Sprite = ball1.newSprite()
-
-let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 5)
-let ball2Sprite = ball2.newSprite()
-bodies.push(ball1)
-bodies.push(ball2)
-
-for(let body of bodies) {
-  let geometry = new THREE.Geometry()
-  geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
-  let line = new MeshLine()
-  line.setGeometry(geometry)
-  let material = new MeshLineMaterial()
-  let trailMesh = new THREE.Mesh(line.geometry, material)
-  body.trail = trailMesh
-  scene.add(body.sprite)
-  scene.add(trailMesh)
+function deleteOldBodies() {
+  bodies.forEach(body => {
+    scene.remove(body.sprite)
+    scene.remove(body.trail)
+  })
 }
-
-let sim = new Simulation(bodies, true)
 
 setInterval(function() {
   if(document.getElementById("pausebtn").innerHTML == "Pause") {
@@ -133,6 +151,7 @@ function drawTrail(body) {
 }
 
 function getSelectedBody() {
+  if(bodiesSelect.options.length == 0) return
   let bodyName = bodiesSelect.options[bodiesSelect.selectedIndex].text
   let body
   for(let i of bodies) {
