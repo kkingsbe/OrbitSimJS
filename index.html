@@ -22,10 +22,15 @@
           <option value="Oscillation">Cool Oscillation</option>
           <option value="chaos">Chaos</option>
         </select>
+        <div class="checkGroup">
+          <p>Trails</p>
+          <input type="checkbox" id="trailsCheck" checked=true>
+        </div>
         <div class="btn" id="pausebtn">Pause</div>
       </div>
       <div class="modify-body">
         <select id="bodies-select"></select>
+        <input placeholder="name" id="nameInput">
         <div class="slidergroup">
           <p id="massval">Mass (kg): </p>
           <input type="range" min="0" max="100" value="0" class="slider" id="mass-slider">
@@ -58,6 +63,7 @@
           <p id="zvelocityval" >Z Velocity: </p>
           <input type="range" min="-100" max="100" value="0" class="slider" id="zv-slider">
         </div>
+        <div class="newBody" id="newBody">New</div>
       </div>
       <div class="viewport" id="viewport">
 

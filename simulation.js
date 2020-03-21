@@ -108,7 +108,7 @@ class Body {
   newSprite() {
     let geometry = new THREE.SphereGeometry(this.radius, 32, 32)
     let material = new THREE.MeshPhongMaterial({color: parseInt(randomColor().replace("#", "0x"), 16)})
-    console.log(material.color)
+    //console.log(material.color)
     this.sprite = new THREE.Mesh(geometry, material)
     return this.sprite
   }

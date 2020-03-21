@@ -1,8 +1,11 @@
 let timeslider = document.getElementById("time-slider")
 let pausebtn = document.getElementById("pausebtn")
 let scenarioSelect = document.getElementById("ScenarioSelect")
+let trailsCheck = document.getElementById("trailsCheck")
+let newBody = document.getElementById("newBody")
 
 let bodiesSelect = document.getElementById("bodies-select")
+let nameInput = document.getElementById("nameInput")
 let massSlider = document.getElementById("mass-slider")
 let radiusSlider = document.getElementById("radius-slider")
 let xSlider = document.getElementById("x-slider")
@@ -78,12 +81,45 @@ zvSlider.oninput = function(event) {
   body.vz = parseFloat(event.target.value)
   zvelocityval.innerHTML = event.target.value
 }
+nameInput.oninput = function(event) {
+  let body = getSelectedBody()
+  body.name = nameInput.value || ""
+  populateBodiesSelect()
+}
+bodiesSelect.oninput = updateBodyModification()
 
 scenarioSelect.onchange = function(event) {
   switchScenario(scenarioSelect.value)
 }
 
+trailsCheck.onchange = function(event) {
+  trails = trailsCheck.checked
+}
+
+/*
+newBody.onclick = function(event) {
+  console.log(event)
+  let body = new Body("New Body", 0, 0, 0, 0, 0, 0, 0, 0)
+  let bodySprite = body.newSprite()
+  bodies.push(body)
+  for(let body of bodies) {
+    let geometry = new THREE.Geometry()
+    geometry.vertices.push(new THREE.Vector3(body.x, body.y, body.z))
+    let line = new MeshLine()
+    line.setGeometry(geometry)
+    let material = new MeshLineMaterial()
+    let trailMesh = new THREE.Mesh(line.geometry, material)
+    body.trail = trailMesh
+    scene.add(body.sprite)
+    scene.add(trailMesh)
+  }
+  populateBodiesSelect()
+  sim = new Simulation(bodies, true)
+}
+*/
+
 function populateBodiesSelect() {
+  bodiesSelect.innerHTML = ""
   for(let body of bodies) {
     let option = document.createElement("option")
     option.innerHTML = body.name
@@ -110,4 +146,6 @@ function updateBodyModification() {
   yvelocityval.innerHTML = `Y Velocity (m/s): ${body.vy.toFixed(3)}`
   zvSlider.value = body.vz
   zvelocityval.innerHTML = `Z Velocity (m/s): ${body.vz.toFixed(3)}`
+  nameInput.value = body.name
+  console.log(body.name)
 }

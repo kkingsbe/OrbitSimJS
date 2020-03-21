@@ -57,6 +57,7 @@ let sim
 
 function switchScenario(name) {
   deleteOldBodies()
+  
   bodies = []
   switch(name) {
     case "empty":
