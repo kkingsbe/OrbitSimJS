@@ -147,5 +147,4 @@ function updateBodyModification() {
   zvSlider.value = body.vz
   zvelocityval.innerHTML = `Z Velocity (m/s): ${body.vz.toFixed(3)}`
   nameInput.value = body.name
-  console.log(body.name)
 }

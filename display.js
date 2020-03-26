@@ -75,18 +75,26 @@ function switchScenario(name) {
       bodies.push(body2)
       break;
     case "StarSystem":
-      let ball1 = new Body("Star", 1e14, 5, 0, 0, 0, 0, 0, 0)
-      let ball1Sprite = ball1.newSprite()
+      let star = new Body("Star", 1e14, 10, 0, 0, 0, 0, 0, 0)
+      let starSprite = star.newSprite()
 
-      let ball2 = new Body("Ball2", 1e13, 1, 30, 0, 0, 0, 0, 10)
-      let ball2Sprite = ball2.newSprite()
+      let planet1 = new Body("Planet1", 1e12, 5, 60, 0, 0, 0, 0, 10)
+      let planet1Sprite = planet1.newSprite()
 
-      let ball3 = new Body("Ball3", 1e13, 1, 0, 30, 0, 0, 2, 10)
-      let ball3Sprite = ball3.newSprite()
+      let planet2 = new Body("Planet2", 1e13, 5, 120, 0, 0, 1, 1, 8)
+      let planet2Sprite = planet2.newSprite()
 
-      bodies.push(ball1)
-      bodies.push(ball2)
-      bodies.push(ball3)
+      let planet2Moon = new Body("moon", 1e5, 1, 130, 0, 0, 1, 3, 17)
+      planet2Moon.newSprite()
+
+      let planet2Moon2 = new Body("moon 2", 1e5, 1, 140, 0, 0, 1, 3, 13)
+      planet2Moon2.newSprite()
+
+      bodies.push(star)
+      bodies.push(planet1)
+      bodies.push(planet2)
+      bodies.push(planet2Moon)
+      bodies.push(planet2Moon2)
       break;
     case "chaos":
       for(let i = 0; i < 500; i++) {
